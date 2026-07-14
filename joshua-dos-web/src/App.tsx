@@ -181,6 +181,12 @@ export default function App() {
         </section>
 
         <section className="aboutGame" aria-labelledby="about-title">
+          <div className="coverFrame">
+            <img
+              src={publicUrl("/jericho.jpg")}
+              alt="Joshua and the Battle of Jericho cover art"
+            />
+          </div>
           <div className="aboutCopy">
             <p className="eyebrow">About the Game</p>
             <h2 id="about-title">Joshua and the Battle of Jericho</h2>
