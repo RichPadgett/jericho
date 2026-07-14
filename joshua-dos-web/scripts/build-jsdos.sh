@@ -14,8 +14,8 @@ if [[ ! -d "${SOURCE_DIR}" ]]; then
   exit 1
 fi
 
-if ! command -v zip >/dev/null 2>&1; then
-  echo "The zip command is required to build joshua.jsdos." >&2
+if ! command -v zip >/dev/null 2>&1 && ! command -v python3 >/dev/null 2>&1; then
+  echo "The zip command or python3 is required to build joshua.jsdos." >&2
   exit 1
 fi
 
@@ -87,7 +87,22 @@ CONFIG
 
 (
   cd "${BUILD_DIR}"
-  zip -qr "${OUTPUT_FILE}" .
+  if command -v zip >/dev/null 2>&1; then
+    zip -qr "${OUTPUT_FILE}" .
+  else
+    python3 - "${OUTPUT_FILE}" <<'PY'
+import os
+import sys
+import zipfile
+
+output_file = sys.argv[1]
+with zipfile.ZipFile(output_file, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+    for root, _, files in os.walk("."):
+        for name in files:
+            path = os.path.join(root, name)
+            archive.write(path, path[2:] if path.startswith("./") else path)
+PY
+  fi
 )
 
 rm -rf "${BUILD_DIR}"
