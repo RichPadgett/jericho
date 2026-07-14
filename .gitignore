@@ -1,0 +1,14 @@
+.DS_Store
+*.ba1
+
+cd/
+
+joshua-dos-web/node_modules/
+joshua-dos-web/dist/
+joshua-dos-web/*.tsbuildinfo
+joshua-dos-web/.env
+joshua-dos-web/.env.*
+!joshua-dos-web/public/
+!joshua-dos-web/public/games/
+joshua-dos-web/public/games/*
+!joshua-dos-web/public/games/.gitkeep
